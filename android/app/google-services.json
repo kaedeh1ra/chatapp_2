@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "285407888195",
+    "project_id": "wardrobebeshka",
+    "storage_bucket": "wardrobebeshka.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285407888195:android:5327aef050c5ae69c2a5f6",
+        "android_client_info": {
+          "package_name": "com.example.chatapp_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoNK7pjP2aW2KuYGHBBr4suSs_xr86n_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

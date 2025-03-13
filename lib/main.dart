@@ -3,10 +3,15 @@ import 'package:chatapp_2/screens/screens.dart';
 import 'package:chatapp_2/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   final client = StreamChatClient(streamKey);
-
+  WidgetsFlutterBinding.ensureInitialized(); // Обязательно!
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp(
     client: client,
   ));
