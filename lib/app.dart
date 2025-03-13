@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
 
-const streamKey = 'gr2mxfnfftjw';
+const streamKey = 'rsbwhcukhfgv';
 
 var logger = Logger();
