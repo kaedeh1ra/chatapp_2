@@ -8,7 +8,7 @@ import 'firebase_options.dart';
 
 void main() async {
   final client = StreamChatClient(streamKey);
-  WidgetsFlutterBinding.ensureInitialized(); // Обязательно!
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
