@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       title: 'chatapp_2',
-      home: NeuroScreen(database: database),
+      home: HomeScreen(database: database),
     );
   }
 }
