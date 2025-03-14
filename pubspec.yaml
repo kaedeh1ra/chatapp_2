@@ -33,8 +33,12 @@ dependencies:
   logger: any
   yandex_gpt_rest_api: ^1.0.2
   http:
+  image_picker:
   firebase_core: any
   firebase_auth: any
+  sqflite: ^2.0.2+1
+  path_provider: ^2.0.11
+  path: ^1.9.1
 
 dev_dependencies:
   flutter_test:
