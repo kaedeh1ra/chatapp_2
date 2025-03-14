@@ -39,6 +39,10 @@ dependencies:
   sqflite: ^2.0.2+1
   path_provider: ^2.0.11
   path: ^1.9.1
+  cloud_firestore: any
+  flutter_screenutil: any
+  firebase_storage: any
+  provider: any
 
 dev_dependencies:
   flutter_test:
@@ -49,7 +53,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
+  assets:
+    - assets/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:chatapp_2/helpers.dart';
 import 'package:chatapp_2/pages/calls_page.dart';
 import 'package:chatapp_2/pages/messages_page.dart';
+import 'package:chatapp_2/ui/screens/bottom_navigation/chats_list/chats_list_screen.dart';
+import 'package:chatapp_2/ui/screens/wrapper/wrapper.dart';
 import 'package:chatapp_2/widgets/glowing_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     pages = [
       const MessagesPage(),
-      const NotificationsPage(),
+      Wrapper(),
       NeuroScreen(database: widget.database),
       const ContactsPage(),
     ];
