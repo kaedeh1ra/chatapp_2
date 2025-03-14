@@ -1,5 +1,4 @@
 import 'package:chatapp_2/screens/screens.dart';
-import 'package:chatapp_2/screens/splash_screen.dart';
 import 'package:chatapp_2/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       title: 'chatapp_2',
-      home: SplashScreen(),
+      home: HomeScreen(),
     );
   }
 }
