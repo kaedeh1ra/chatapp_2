@@ -5,7 +5,6 @@ import 'package:chatapp_2/widgets/glowing_action_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 import '../pages/contacts_page.dart';
 import '../pages/notifications_page.dart';

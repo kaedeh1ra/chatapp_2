@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "D:\\Amongasik\\program files\\flutter\\packages\\flutter_tools\\gradle\\src\\main\\groovy\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "D:\\Amongasik\\zSDK\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "D:\\Amongasik\\program files\\flutterprojects\\chatapp_2\\android\\app\\.cxx\\Debug\\2m6z1x69\\armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "D:\\Amongasik\\zSDK\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "D:\\Amongasik\\program files\\flutterprojects\\chatapp_2\\android\\app\\.cxx\\Debug\\2m6z1x69\\armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "D:\\Amongasik\\zSDK\\ndk\\28.0.13004108\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe",
+      "cppCompilerExecutable": "D:\\Amongasik\\zSDK\\ndk\\28.0.13004108\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}

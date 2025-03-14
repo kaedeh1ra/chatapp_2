@@ -1,0 +1,2 @@
+D:/Amongasik/program files/flutterprojects/chatapp_2/android/app/.cxx/Debug/24642s3v/x86/CMakeFiles/edit_cache.dir
+D:/Amongasik/program files/flutterprojects/chatapp_2/android/app/.cxx/Debug/24642s3v/x86/CMakeFiles/rebuild_cache.dir
