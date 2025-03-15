@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.light(),
           darkTheme: AppTheme.dark(),
           title: 'chatapp_2',
-          home: HomeScreen(database: database),
+          home: LoginScreen(database: database),
         ),
       ),
     );

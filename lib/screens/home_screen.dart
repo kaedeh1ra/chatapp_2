@@ -41,15 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
       const MessagesPage(),
       Wrapper(),
       NeuroScreen(database: widget.database),
-      const ContactsPage(),
+      ContactsPage(database: widget.database),
     ];
   }
 
   final pageTitles = const [
-    'Messages',
-    'Notifications',
-    'Calls',
-    'Contacts',
+    'Лента',
+    'Сообщения',
+    'Гардероб',
+    'Дом',
   ];
 
   void _onNavigationItemSelected(index) {
@@ -77,9 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         leadingWidth: 54,
-        leading: Align(
-            alignment: Alignment.centerRight,
-            child: IconBackground(icon: Icons.search, onTap: () {})),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
@@ -117,7 +114,7 @@ class _BottomNavigationBar extends StatefulWidget {
 class _BottomNavigationBarState extends State<_BottomNavigationBar> {
   var selectedIndex = 0;
   String _iamToken =
-      't1.9euelZqTxo2PlIuLlImezMeXzpSVyO3rnpWajZWOmM3HmJSdycmUlJmVzo3l8_dgYS1B-e8IbTBH_N3z9yAQK0H57whtMEf8zef1656Vmo-UyMeVzpjKx8-bz4yPmY7O7_zF656Vmo-UyMeVzpjKx8-bz4yPmY7O.ZVqF961eKaCoEBifgtTPAI3PJapWySgy0FmDbMLKlHpgZ4CQROnPtbOmWuwrrC7TS5W-z7ewTcqqAmUVkBP3Dw';
+      't1.9euelZqbl5ebkpeKjJmSzciRyp2czO3rnpWajZWOmM3HmJSdycmUlJmVzo3l8_cWXSpB-e8fJ14D_t3z91YLKEH57x8nXgP-zef1656Vmo3KypedmpqVnpvLkIvOzpaN7_zF656Vmo3KypedmpqVnpvLkIvOzpaN.tiOTccXaMN18bZvtIGrEktYDcWQVwrgUfRWqJqejI-Yjmx9amDqFFnk5nDSi_WCq_OiWNDxmT4FR3UV5VoftAQ';
   String _operationId = '';
   String _imageUrl = '';
   bool _isLoading = false;
@@ -285,16 +282,16 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
               _NavigationBarItem(
                 onTap: handleItemSelected,
                 index: 0,
-                lable: 'Messages',
-                icon: CupertinoIcons.bubble_left_bubble_right_fill,
+                lable: 'Лента',
+                icon: CupertinoIcons.pano,
                 isSelected: (selectedIndex == 0),
               ),
               _NavigationBarItem(
                 onTap: handleItemSelected,
-                index: 1,
-                lable: 'Notification',
+                index: 2,
+                lable: 'Гардероб',
                 icon: CupertinoIcons.bell_solid,
-                isSelected: (selectedIndex == 1),
+                isSelected: (selectedIndex == 2),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -305,22 +302,22 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                       Future<String> clothesStr =
                           getAllClothesNames(widget.database);
                       String _prompt =
-                          '$clothesStr собери всю эту одежду и выбери лучшую на твой взгляд для мальчика 16 лет с рыжими волосами Два ракурса: спереди и сбоку. Разрешение 1:1 (квадратное). Фотореалистичный стиль. Высокое разрешение (HD). Четкий фокус. Белый фон.';
+                          'мальчика в сером пидажке красном галстуке и серой рубашке создай на твой взгляд для мальчика 16 лет с рыжими волосами Два ракурса: спереди и сбоку. Разрешение 1:1 (квадратное). Фотореалистичный стиль. Высокое разрешение (HD). Четкий фокус. Белый фон.';
                       generateImage(_prompt);
                     }),
               ),
               _NavigationBarItem(
                 onTap: handleItemSelected,
-                index: 2,
-                lable: 'Calls',
-                icon: CupertinoIcons.phone_fill,
-                isSelected: (selectedIndex == 2),
+                index: 1,
+                lable: 'Сообщения',
+                icon: CupertinoIcons.person_2_fill,
+                isSelected: (selectedIndex == 1),
               ),
               _NavigationBarItem(
                 onTap: handleItemSelected,
                 index: 3,
-                lable: 'Contacts',
-                icon: CupertinoIcons.person_2_fill,
+                lable: 'Дом',
+                icon: CupertinoIcons.home,
                 isSelected: (selectedIndex == 3),
               ),
             ],

@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../theme.dart';
+import '../../../../../widgets/glowing_action_button.dart';
+
 class BottomField extends StatelessWidget {
   const BottomField({super.key, this.onTap, this.onChanged, this.controller});
   final void Function()? onTap;
@@ -14,28 +17,52 @@ class BottomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: grey.withOpacity(0.2),
-      padding: EdgeInsets.symmetric(horizontal: 1.sw * 0.05, vertical: 25.h),
+    return SafeArea(
+      bottom: true,
+      top: false,
       child: Row(
         children: [
-          InkWell(
-            onTap: null,
-            child: CircleAvatar(
-              radius: 20.r,
-              backgroundColor: white,
-              child: const Icon(Icons.add),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(
+                  width: 2,
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+            ),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Icon(
+                Icons.attach_file,
+              ),
             ),
           ),
-          10.horizontalSpace,
           Expanded(
-              child: CustomTextfield(
-            controller: controller,
-            isChatText: true,
-            hintText: "Write message..",
-            onChanged: onChanged,
-            onTap: onTap,
-          ))
+            child: Padding(
+              padding: EdgeInsets.only(left: 16.0),
+              child: TextField(
+                controller: controller,
+                onChanged: onChanged,
+                style: TextStyle(fontSize: 14),
+                decoration: InputDecoration(
+                  hintText: 'Напечатать...',
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 12,
+              right: 24.0,
+            ),
+            child: GlowingActionButton(
+              color: AppColors.accent,
+              icon: Icons.send_rounded,
+              onPressed: onTap ?? () {},
+            ),
+          ),
         ],
       ),
     );
@@ -50,39 +77,158 @@ class ChatBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = isCurrentUser
-        ? BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-            bottomLeft: Radius.circular(16.r))
-        : BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-            bottomRight: Radius.circular(16.r));
-    final alignment =
-        isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
-    return Align(
-      alignment: alignment,
-      child: Container(
-        constraints: BoxConstraints(maxWidth: 1.sw * 0.75, minWidth: 50.w),
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            color: isCurrentUser ? primary : grey.withOpacity(0.2),
-            borderRadius: borderRadius),
+    if (isCurrentUser)
+      return _MessageOwnTile(
+        message: message.content!,
+        messageDate: DateFormat('hh:mm').format(message.timestamp!),
+      );
+    else
+      return _MessageTile(
+        message: message.content!,
+        messageDate: DateFormat('hh:mm').format(message.timestamp!),
+      );
+  }
+}
+
+class _MessageTile extends StatelessWidget {
+  const _MessageTile({
+    required this.message,
+    required this.messageDate,
+  });
+
+  final String message;
+  final String messageDate;
+
+  static const _borderRadius = 26.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Align(
+        alignment: Alignment.centerLeft,
         child: Column(
-          crossAxisAlignment:
-              isCurrentUser ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              message.content!,
-              style: body.copyWith(color: isCurrentUser ? white : null),
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(_borderRadius),
+                  topRight: Radius.circular(_borderRadius),
+                  bottomRight: Radius.circular(_borderRadius),
+                ),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+                child: Text(message),
+              ),
             ),
-            5.verticalSpace,
-            Text(
-              DateFormat('hh:mm a').format(message.timestamp!),
-              style: small.copyWith(color: isCurrentUser ? white : null),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                messageDate,
+                style: const TextStyle(
+                  color: AppColors.textFaded,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MessageOwnTile extends StatelessWidget {
+  const _MessageOwnTile({
+    required this.message,
+    required this.messageDate,
+  });
+
+  final String message;
+  final String messageDate;
+
+  static const _borderRadius = 26.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                color: AppColors.secondary,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(_borderRadius),
+                  bottomRight: Radius.circular(_borderRadius),
+                  bottomLeft: Radius.circular(_borderRadius),
+                ),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
+                child: Text(message,
+                    style: const TextStyle(
+                      color: AppColors.textLigth,
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                messageDate,
+                style: const TextStyle(
+                  color: AppColors.textFaded,
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DateLable extends StatelessWidget {
+  const _DateLable({
+    required this.lable,
+  });
+
+  final String lable;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12),
+            child: Text(
+              lable,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textFaded,
+              ),
+            ),
+          ),
         ),
       ),
     );

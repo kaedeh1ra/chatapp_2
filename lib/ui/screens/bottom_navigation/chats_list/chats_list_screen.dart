@@ -25,10 +25,6 @@ class ChatsListScreen extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: 1.sw * 0.05, vertical: 10.h),
           child: Column(
             children: [
-              30.verticalSpace,
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Chats", style: h)),
               20.verticalSpace,
               CustomTextfield(
                 isSearch: true,

@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chatapp_2/helpers.dart';
 import 'package:chatapp_2/theme.dart';
 import 'package:faker/faker.dart';
@@ -9,221 +12,67 @@ import '../models/models.dart';
 import '../screens/chat_screen.dart';
 import '../widgets/widgets.dart';
 
-class MessagesPage extends StatelessWidget {
+class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(child: _Stories()),
-        SliverList(delegate: SliverChildBuilderDelegate(_delegate))
-      ],
-    );
-  }
-
-  Widget _delegate(BuildContext context, int index) {
-    final Faker faker = Faker();
-    final date = Helpers.randomDate();
-    return _MessageTitle(
-      messageData: MessageData(
-        senderName: faker.person.name(),
-        message: faker.lorem.sentence(),
-        messageDate: date,
-        dateMessage: Jiffy.parseFromDateTime(date).fromNow(),
-        profilePicture: Helpers.randomPictureUrl(),
-      ),
-    );
-  }
+  State<MessagesPage> createState() => _MessagesPageState();
 }
 
-class _MessageTitle extends StatelessWidget {
-  const _MessageTitle({
-    required this.messageData,
-  });
-
-  final MessageData messageData;
+class _MessagesPageState extends State<MessagesPage> {
+  final List<String> imageUrls = [
+    "https://storage.yandexcloud.net/elyts-prod/main/83e/83e0cc855b1ec736ae36b009e2f7d486/169597335265167fe8a8c71.png",
+    "https://storage.yandexcloud.net/elyts-prod/main/8bc/8bcd493a88002d692b77ebed507364d7/169597333665167fd8f35a4.png",
+    "https://storage.yandexcloud.net/elyts-prod/main/dbd/dbd266725bdcd8abff458af0411b58d9/1695974109651682dd5e4bd.png",
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).push(ChatScreen.route(messageData));
-      },
-      child: Container(
-        height: 100,
-        margin: const EdgeInsets.symmetric(horizontal: 8),
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.grey,
-              width: 0.2,
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Avatar.medium(url: messageData.profilePicture),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Text(
-                        messageData.senderName,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          letterSpacing: 0.2,
-                          wordSpacing: 1.5,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                      child: Text(
-                        messageData.message,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textFaded,
-                        ),
-                      ),
-                    ),
-                  ],
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: 20, // Number of news items
+        itemBuilder: (context, index) {
+          // Generate a random index to pick a random image
+          final random = Random();
+          final imageUrl = imageUrls[random.nextInt(imageUrls.length)];
+
+          return Card(
+            margin: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  placeholder: (context, url) =>
+                      Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 200,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const SizedBox(
-                      height: 4,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Random News Title ${index + 1}',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      messageData.dateMessage.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 11,
-                        letterSpacing: -0.2,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textFaded,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    Container(
-                      width: 18,
-                      height: 18,
-                      decoration: const BoxDecoration(
-                        color: AppColors.secondary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: AppColors.textLigth,
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Stories extends StatelessWidget {
-  const _Stories();
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      child: SizedBox(
-        height: 137,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 16, bottom: 16),
-              child: Text(
-                'Истории',
-                style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 15,
-                    color: AppColors.textFaded),
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'Новость реального пользователя',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                ),
+                SizedBox(height: 8.0),
+              ],
             ),
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  final faker = Faker();
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 60,
-                      child: _StoryCard(
-                          storyData: StoryData(
-                              name: faker.person.firstName(),
-                              url: Helpers.randomPictureUrl())),
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
+          );
+        },
       ),
-    );
-  }
-}
-
-class _StoryCard extends StatelessWidget {
-  const _StoryCard({
-    Key? key,
-    required this.storyData,
-  }) : super(key: key);
-
-  final StoryData storyData;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Avatar.medium(url: storyData.url),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Text(
-            storyData.name,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 11,
-              letterSpacing: 0.3,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

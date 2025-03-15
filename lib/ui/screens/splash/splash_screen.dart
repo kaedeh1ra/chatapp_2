@@ -5,10 +5,11 @@ import 'package:chatapp_2/core/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sqflite/sqflite.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
+  const SplashScreen({super.key, required this.database});
+  final Database database;
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }

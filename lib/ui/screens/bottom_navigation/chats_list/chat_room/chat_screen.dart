@@ -7,9 +7,13 @@ import 'package:chatapp_2/ui/screens/auth/login/login_screen.dart';
 import 'package:chatapp_2/ui/screens/bottom_navigation/chats_list/chat_room/chat_viewmodel.dart';
 import 'package:chatapp_2/ui/screens/bottom_navigation/chats_list/chat_room/chat_widgets.dart';
 import 'package:chatapp_2/ui/screens/other/user_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../../widgets/avatar.dart';
+import '../../../../../widgets/icon_buttons.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key, required this.receiver});
@@ -22,6 +26,43 @@ class ChatScreen extends StatelessWidget {
       create: (context) => ChatViewmodel(ChatService(), currentUser!, receiver),
       child: Consumer<ChatViewmodel>(builder: (context, model, _) {
         return Scaffold(
+          appBar: AppBar(
+            iconTheme: Theme.of(context).iconTheme,
+            centerTitle: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leadingWidth: 54,
+            leading: Align(
+              alignment: Alignment.centerRight,
+              child: IconBackground(
+                icon: CupertinoIcons.back,
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+            title: _AppBarTitle(messageData: receiver.name!),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Center(
+                  child: IconBackground(
+                    icon: CupertinoIcons.video_camera_solid,
+                    onTap: () {},
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Center(
+                  child: IconBackground(
+                    icon: CupertinoIcons.phone_solid,
+                    onTap: () {},
+                  ),
+                ),
+              ),
+            ],
+          ),
           body: Column(
             children: [
               Expanded(
@@ -30,8 +71,6 @@ class ChatScreen extends StatelessWidget {
                       horizontal: 1.sw * 0.05, vertical: 10.h),
                   child: Column(
                     children: [
-                      35.verticalSpace,
-                      _buildHeader(context, name: receiver.name!),
                       15.verticalSpace,
                       Expanded(
                         child: ListView.separated(
@@ -69,33 +108,47 @@ class ChatScreen extends StatelessWidget {
       }),
     );
   }
+}
 
-  Row _buildHeader(BuildContext context, {String name = ""}) {
+class _AppBarTitle extends StatelessWidget {
+  const _AppBarTitle({
+    required this.messageData,
+  });
+
+  final String messageData;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
-          onTap: () => Navigator.pop(context),
-          child: Container(
-            padding: const EdgeInsets.only(left: 10, top: 6, bottom: 6),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
-                color: grey.withOpacity(0.15)),
-            child: const Icon(Icons.arrow_back_ios),
+        Avatar.small(
+          url: '',
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                messageData,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 2),
+              const Text(
+                'В сети сейчас',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+            ],
           ),
-        ),
-        15.horizontalSpace,
-        Text(
-          name,
-          style: h.copyWith(fontSize: 20.sp),
-        ),
-        const Spacer(),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.r),
-              color: grey.withOpacity(0.15)),
-          child: const Icon(Icons.more_vert),
-        ),
+        )
       ],
     );
   }

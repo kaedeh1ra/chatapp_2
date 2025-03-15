@@ -4,6 +4,7 @@ import 'package:chatapp_2/core/constants/styles.dart';
 import 'package:chatapp_2/core/enums/enums.dart';
 import 'package:chatapp_2/core/extension/widget_extension.dart';
 import 'package:chatapp_2/core/services/auth_service.dart';
+import 'package:chatapp_2/screens/home_screen.dart';
 import 'package:chatapp_2/ui/screens/auth/login/login_viewmodel.dart';
 import 'package:chatapp_2/ui/widgets/button_widget.dart';
 import 'package:chatapp_2/ui/widgets/textfield_widget.dart';
@@ -11,10 +12,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
-
+  const LoginScreen({super.key, this.database = null});
+  final Database? database;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -70,7 +72,11 @@ class LoginScreen extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, signup);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      HomeScreen(database: database!)));
                         },
                         child: Text("Signup",
                             style: body.copyWith(fontWeight: FontWeight.bold)))

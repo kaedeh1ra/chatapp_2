@@ -11,8 +11,6 @@ class RouteUtils {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case splash:
-        return MaterialPageRoute(builder: (context) => const SplashScreen());
       // Auth
       case signup:
         return MaterialPageRoute(builder: (context) => const SignupScreen());
